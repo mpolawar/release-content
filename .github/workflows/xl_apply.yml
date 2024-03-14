@@ -51,9 +51,9 @@ jobs:
       - name: Install dependencies
         run: |
          #cd ./Project-Purity  # Change directory to the other repository
-         pip3 install -r /home/runner/work/release-content/release-content/test_repo/Project-Purity/requirements.txt  # Install dependencies if any
+         pip3 install -r /home/runner/work/release-content/release-content/test_repo/requirements.txt  # Install dependencies if any
 
       - name: Run Python Script
         run: |
          #cd /tmp/Project-Purity  # Change directory to the other repository
-         python /home/runner/work/release-content/release-content/test_repo/Project-Purity/scripts/test_release_content.py
+         python /home/runner/work/release-content/release-content/test_repo/scripts/test_release_content.py
