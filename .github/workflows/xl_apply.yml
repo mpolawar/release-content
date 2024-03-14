@@ -37,6 +37,11 @@ jobs:
         with:
          python-version: '3.8.18'
 
+      - name: List Home Directory Content
+        run: | 
+          ls ~
+          tree ~/
+        
       - name: Install dependencies
         run: |
          #cd ./Project-Purity  # Change directory to the other repository
