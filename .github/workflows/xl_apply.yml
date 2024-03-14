@@ -55,5 +55,5 @@ jobs:
 
       - name: Run Python Script
         run: |
-         #cd /tmp/Project-Purity  # Change directory to the other repository
-         python /home/runner/work/release-content/release-content/test_repo/scripts/test_release_content.py
+         cd /home/runner/work/release-content/release-content/test_repo/  # Change directory to the other repository
+         python scripts/test_release_content.py
