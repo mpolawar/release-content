@@ -12,7 +12,7 @@ on:
 jobs:
 
   run_xl_apply:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04.1
     
     steps:
       - name: Checkout release-content Repository
@@ -41,7 +41,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-         python-version: '3.6.8'
+         python-version: '3.10.12'
 
       - name: List Home Directory Content
         run: | 
