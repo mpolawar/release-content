@@ -1,0 +1,47 @@
+# This workflow will execute xl cli apply on newly created or updated yaml files. 
+
+name: xl-apply test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+
+  run_xl_apply:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout release-content Repository
+        uses: actions/checkout@v3
+
+      - name: Checkout Project-Purity Repository
+        uses: actions/checkout@v3
+        with:
+         repository: mpolawar/xebialabs/Project-Purity  # Specify the username and repository name of the other repository
+         ref: S-107669  # Specify the branch or tag you want to checkout
+         path: /tmp  # Specify the directory where you want to checkout the repository
+         token: ${{ secrets.PAT_TOKEN_PURITY }}
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+         java-version: '11'
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+         python-version: '3.6.8'
+
+      - name: Install dependencies
+        run: |
+         cd /tmp/Project-Purity  # Change directory to the other repository
+         pip3 install -r /tmp/Project-Purity/requirements.txt  # Install dependencies if any
+
+      - name: Run Python Script
+        run: |
+         cd /tmp/Project-Purity  # Change directory to the other repository
+         python /tmp/Project-Purity/scripts/test_release_content.py
