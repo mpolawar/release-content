@@ -23,7 +23,7 @@ jobs:
         with:
          repository: xebialabs/Project-Purity  # Specify the username and repository name of the other repository
          ref: S-107669  # Specify the branch or tag you want to checkout
-         path: /tmp  # Specify the directory where you want to checkout the repository
+         #path: /tmp  # Specify the directory where you want to checkout the repository
          token: ${{ secrets.PAT_TOKEN_PURITY }}
 
       - name: Set up JDK 11
@@ -38,10 +38,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-         cd /tmp/Project-Purity  # Change directory to the other repository
-         pip3 install -r /tmp/Project-Purity/requirements.txt  # Install dependencies if any
+         #cd ./Project-Purity  # Change directory to the other repository
+         pip3 install -r ./Project-Purity/requirements.txt  # Install dependencies if any
 
       - name: Run Python Script
         run: |
-         cd /tmp/Project-Purity  # Change directory to the other repository
-         python /tmp/Project-Purity/scripts/test_release_content.py
+         #cd /tmp/Project-Purity  # Change directory to the other repository
+         python ./Project-Purity/scripts/test_release_content.py
