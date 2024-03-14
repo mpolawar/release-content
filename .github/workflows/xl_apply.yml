@@ -18,9 +18,6 @@ jobs:
       - name: Checkout release-content Repository
         uses: actions/checkout@v3
 
-      - name: Use PAT
-        run: echo ${{ secrets.PAT_TOKEN_PURITY }}
-
       - name: Checkout Project-Purity Repository
         uses: actions/checkout@v3
         with:
