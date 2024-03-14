@@ -21,7 +21,7 @@ jobs:
       - name: Checkout Project-Purity Repository
         uses: actions/checkout@v3
         with:
-         repository: mpolawar/xebialabs/Project-Purity  # Specify the username and repository name of the other repository
+         repository: xebialabs/Project-Purity  # Specify the username and repository name of the other repository
          ref: S-107669  # Specify the branch or tag you want to checkout
          path: /tmp  # Specify the directory where you want to checkout the repository
          token: ${{ secrets.PAT_TOKEN_PURITY }}
