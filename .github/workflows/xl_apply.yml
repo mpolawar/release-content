@@ -12,7 +12,7 @@ on:
 jobs:
 
   run_xl_apply:
-    runs-on: ubuntu-22.04.1
+    runs-on: ubuntu-22.04
     
     steps:
       - name: Checkout release-content Repository
