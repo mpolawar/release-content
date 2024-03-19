@@ -32,6 +32,7 @@ jobs:
       
       - name: List committed YAML files
         run: |
+          git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -E '\.(yaml|yml)
           YAML_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -E '\.(yaml|yml)$')
           echo "::set-output name=yaml_files::$YAML_FILES"
 
