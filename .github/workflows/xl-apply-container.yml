@@ -17,12 +17,8 @@ jobs:
     steps:
       - name: Checkout release-content Repository
         uses: actions/checkout@v3
-        
-      - name: Download and Install xl-cli
-        run: |
-         wget https://nexus.xebialabs.com/nexus/content/repositories/releases/com/xebialabs/xlclient/xl-client/23.3.5/xl-client-23.3.5-linux-amd64.bin --user=${{ secrets.NEXUS_USERNAME }} --password=${{ secrets.NEXUS_PASSWORD }} -O xl1
-         chmod 755 xl1
-         ./xl1 version
+        with:
+          fetch-depth: 2
 
       - name: List committed files
         run: |
@@ -34,4 +30,11 @@ jobs:
         run: |
           YAML_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -E '\.(yaml|yml)$')
           echo "::set-output name=yaml_files::$YAML_FILES"
+
+              
+      - name: Download and Install xl-cli
+        run: |
+         wget https://nexus.xebialabs.com/nexus/content/repositories/releases/com/xebialabs/xlclient/xl-client/23.3.5/xl-client-23.3.5-linux-amd64.bin --user=${{ secrets.NEXUS_USERNAME }} --password=${{ secrets.NEXUS_PASSWORD }} -O xl1
+         chmod 755 xl1
+         ./xl1 version
           
