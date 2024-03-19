@@ -22,7 +22,7 @@ jobs:
         run: |
           #TOKEN=$GITHUB_TOKEN
           URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
-          #FILES=$(curl -sSL -H "Authorization: token $TOKEN" -H "Accept: application/vnd.github.v3+json" "$URL" | jq -r '.[] | .filename')
+          #FILES=$(curl -sSL -H "Authorization: token $TOKEN" -H "Accept: application/vnd.github.v3+json" "$URL" | jq -r '.[].filename')
           FILES=$(curl -sSL -H "Accept: application/vnd.github.v3+json" "$URL" | jq -r '.[] | .filename')
           echo "::set-output name=files::$FILES"
 
