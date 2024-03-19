@@ -1,0 +1,32 @@
+# This workflow will execute xl cli apply on newly created or updated yaml files. 
+
+name: demo yaml file
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+
+  run_xl_apply:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout release-content Repository
+        uses: actions/checkout@v3
+
+      - name: Get pull request files
+        id: pr_files
+        run: |
+          #TOKEN=$GITHUB_TOKEN
+          URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
+          #FILES=$(curl -sSL -H "Authorization: token $TOKEN" -H "Accept: application/vnd.github.v3+json" "$URL" | jq -r '.[] | .filename')
+          FILES=$(curl -sSL -H "Accept: application/vnd.github.v3+json" "$URL" | jq -r '.[] | .filename')
+          echo "::set-output name=files::$FILES"
+
+      - name: Display pull request files
+        run: |
+          echo "Pull request files:"
+          echo "${{ steps.pr_files.outputs.files }}"
+        
