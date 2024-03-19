@@ -1,6 +1,7 @@
 # This workflow will execute xl cli apply on newly created or updated yaml files. 
 
 name: demo yaml file
+on:
   push:
     branches: [ "main" ]
   pull_request:
