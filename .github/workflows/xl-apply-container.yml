@@ -22,7 +22,7 @@ jobs:
 
       - name: Mithun
         run: |
-          git ls-tree --name-only -r ${{ github.sha }})
+          git ls-tree --name-only -r ${{ github.sha }}
 
       - name: List committed files
         run: |
