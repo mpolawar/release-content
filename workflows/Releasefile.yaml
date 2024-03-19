@@ -19,7 +19,7 @@ spec:
     exportDashboards: false
     exportNotifications: false
     versioningStyle: multipleFilesPerCIType
-- directory: Digital.ai Deploy
+- directory: Digital.ai Deploy1
   children:
   - type: xlrelease.FolderVersioningSettings
     gitConnection: Digital.ai Official Repository
