@@ -24,11 +24,11 @@ jobs:
          chmod 755 xl1
          ./xl1 version
 
-      - name: List committed YAML files
-        run: |
-          git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep '\.yaml$'
-
       - name: List committed files
         run: |
           git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
+      
+      - name: List committed YAML files
+        run: |
+          git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep '\.yaml$'
           
