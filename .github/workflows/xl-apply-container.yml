@@ -20,6 +20,10 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Mithun
+        run: |
+          git ls-tree --name-only -r ${{ github.sha }})
+
       - name: List committed files
         run: |
           git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
