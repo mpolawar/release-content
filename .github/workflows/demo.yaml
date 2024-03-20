@@ -17,17 +17,15 @@ jobs:
       - name: Checkout release-content Repository
         uses: actions/checkout@v3
 
-      - name: Get pull request files
-        id: pr_files
-        run: |
-          #TOKEN=$GITHUB_TOKEN
-          URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
-          #FILES=$(curl -sSL -H "Authorization: token $TOKEN" -H "Accept: application/vnd.github.v3+json" "$URL" | jq -r '.[].filename')
-          FILES=$(curl -sSL -H "Accept: application/vnd.github.v3+json" "$URL" | jq -r '.[].filename')
-          echo "::set-output name=files::$FILES"
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v43
 
-      - name: Display pull request files
+      - name: List all changed files
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
-          echo "Pull request files:"
-          echo "${{ steps.pr_files.outputs.files }}"
+          for file in ${ALL_CHANGED_FILES}; do
+            echo "$file was changed"
+          done
         
