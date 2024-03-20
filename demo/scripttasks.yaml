@@ -1,0 +1,529 @@
+---
+apiVersion: xl-release/v1
+kind: Templates
+metadata:
+  home: script_task
+spec:
+- directory: subfolder-to-store-templates
+  children:
+  - template: adra0_Template
+    scheduledStartDate: 2023-04-28T17:35:40.636Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra10_Template
+    scheduledStartDate: 2023-04-28T17:35:41.105Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra11_Template
+    scheduledStartDate: 2023-04-28T17:35:41.148Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra12_Template
+    scheduledStartDate: 2023-04-28T17:35:41.195Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra13_Template
+    scheduledStartDate: 2023-04-28T17:35:41.238Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra14_Template
+    scheduledStartDate: 2023-04-28T17:35:41.290Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra15_Template
+    scheduledStartDate: 2023-04-28T17:35:41.338Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra16_Template
+    scheduledStartDate: 2023-04-28T17:35:41.382Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra17_Template
+    scheduledStartDate: 2023-04-28T17:35:41.423Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra18_Template
+    scheduledStartDate: 2023-04-28T17:35:41.466Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra19_Template
+    scheduledStartDate: 2023-04-28T17:35:41.508Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra1_Template
+    scheduledStartDate: 2023-04-28T17:35:40.700Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra2_Template
+    scheduledStartDate: 2023-04-28T17:35:40.745Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra3_Template
+    scheduledStartDate: 2023-04-28T17:35:40.790Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra4_Template
+    scheduledStartDate: 2023-04-28T17:35:40.832Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra5_Template
+    scheduledStartDate: 2023-04-28T17:35:40.877Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra6_Template
+    scheduledStartDate: 2023-04-28T17:35:40.924Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra7_Template
+    scheduledStartDate: 2023-04-28T17:35:40.967Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra8_Template
+    scheduledStartDate: 2023-04-28T17:35:41.014Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: adra9_Template
+    scheduledStartDate: 2023-04-28T17:35:41.062Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: vhgt0_Template
+    scheduledStartDate: 2023-04-25T11:17:15.178Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: vhgt1_Template
+    scheduledStartDate: 2023-04-25T11:17:15.304Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: vhgt1_Template (1)
+    scheduledStartDate: 2023-04-25T11:17:15.304Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: vhgt2_Template
+    scheduledStartDate: 2023-04-25T11:17:15.400Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: vhgt3_Template
+    scheduledStartDate: 2023-04-25T11:17:15.482Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - template: vhgt4_Template
+    scheduledStartDate: 2023-04-25T11:17:15.583Z
+    phases:
+    - phase: New Phase
+    riskProfile: Default risk profile
+  - notifications:
+    - notification: TASK_OVERDUE
+      priority: High
+      subject: "[Release] ${release.title}: ${task.title}"
+      body: |-
+        The **${task.title}** task in the **${release.title}** release is overdue.
+
+        After the task is completed, please mark it as Completed in Release.
+      roles:
+      - Watcher
+      - Release Admin
+      - Task Owner
+    - notification: TASK_FLAGGED
+      priority: High
+      subject: "[Release] ${release.title}: ${task.title}"
+      body: |-
+        The status of the **${task.title}** task in the **${release.title}** release was changed to **${task.flagStatus}** with the following comment:
+
+        **${release.flagComment}**
+      roles:
+      - Watcher
+      - Release Admin
+      - Task Team
+    - notification: AUDIT_REPORT_JOB_ABORTED
+      priority: Normal
+      subject: "[Release] Audit report was aborted"
+      body: |-
+        **Your audit report was aborted!**
+
+         Please try to generate it again or contact your Release administrator for assistance.
+    - notification: MANUAL_TASK_STARTED
+      priority: Normal
+      subject: "[Release] ${release.title}: ${task.title}"
+      body: |-
+        The **${task.title}** task in the **${release.title}** release has started and is assigned to you or your team.
+
+        After the task is completed, please mark it as Completed in Release.
+      roles:
+      - Watcher
+      - Task Owner
+    - notification: TASK_FAILED
+      priority: High
+      subject: "[Release] ${release.title}: ${task.title}"
+      body: |-
+        The **${task.title}** task in the **${release.title}** release has failed.
+
+        Other tasks could still be in progress, but the release will stop after they complete.
+
+        You can retry the task, reassign it to somebody else or abort the release.
+      roles:
+      - Watcher
+      - Task Team
+      - Task Owner
+    - notification: USER_MENTIONED
+      priority: Normal
+      subject: "[Release] ${mentionedByFullName} mentioned you on ${release.title}:\
+        \ ${task.title}"
+      body: "**${mentionedByFullName}** mentioned you on the **${task.title}** task\
+        \ in the **${release.title}** release:"
+    - notification: COMMENT_ADDED
+      priority: Normal
+      subject: "[Release] ${release.title}: ${task.title}"
+      body: |-
+        **${comment.authorFullName}** commented on the **${task.title}** task in the **${release.title}** release:
+
+        ${comment.text}
+      roles:
+      - Watcher
+      - Task Team
+      - Task Owner
+    - notification: AUDIT_REPORT_JOB_FAILED
+      priority: Normal
+      subject: "[Release] Audit report has failed"
+      body: |-
+        **Your audit report has failed!**
+
+         Please try to generate it again or contact your Release administrator for assistance.
+    - notification: RELEASE_FAILED
+      priority: High
+      subject: "[Release] ${release.title}"
+      body: |-
+        The **${release.title}** release has failed due to a task failure.
+
+        The release is now stopped.
+
+        You can retry the failed task, reassign it to somebody else or abort the release.
+      roles:
+      - Release Admin
+    - notification: TASK_DUE_SOON
+      priority: Normal
+      subject: "[Release] ${release.title}: ${task.title}"
+      body: |-
+        The **${task.title}** task in the **${release.title}** release is due in **${task.dueInHours}** hours and **${task.dueInMinutes}** minutes.
+
+        After the task is completed, please mark it as Completed in Release.
+      roles:
+      - Watcher
+      - Release Admin
+      - Task Owner
+    - notification: ACTIVE_TASK_UNASSIGNED
+      priority: Normal
+      subject: "[Release] ${release.title}: ${task.title}"
+      body: |-
+        The **${task.title}** task in the **${release.title}** release is active but not assigned to anyone anymore.
+
+        Please assign the task to a user or a team.
+      roles:
+      - Watcher
+      - Task Team
+      - Task Owner
+    - notification: RELEASE_FAILING
+      priority: High
+      subject: "[Release] ${release.title}"
+      body: |-
+        The **${release.title}** release is failing due to a task failure.
+
+        Other tasks may still be in progress, but the release will stop after they complete.
+
+        You can retry the failed task, reassign it to somebody else or abort the release.
+      roles:
+      - Release Admin
+    - notification: USER_TOKEN_ABOUT_TO_EXPIRE
+      priority: Normal
+      subject: "[Release] Your personal access token is about to expire"
+      body: |-
+        Your personal access token "'${token.tokenNote}'" will expire in about ${token.expirationDurationInHours} hours.
+
+         If this token is still needed, visit [Access tokens](${url}#/personal-access-token) to generate an equivalent.
+    - notification: RELEASE_FLAGGED
+      priority: High
+      subject: "[Release] ${release.title}"
+      body: |-
+        The status of the **${release.title}** release was changed to **${release.flagStatus}** with the following comment:
+
+        **${release.flagComment}**
+      roles:
+      - Release Admin
+    - notification: MANUAL_TASK_STARTED_WITHOUT_OWNER
+      priority: Normal
+      subject: "[Release] ${release.title}: ${task.title}"
+      body: |-
+        The **${task.title}** task in the **${release.title}** release has started, but it is not assigned.
+
+        Please assign the task to a user or a team.
+      roles:
+      - Watcher
+      - Release Admin
+    - notification: RELEASE_COMPLETED
+      priority: Normal
+      subject: "[Release] ${release.title}"
+      body: "The **${release.title}** release has been completed."
+      roles:
+      - Release Admin
+    - notification: TASK_WAITING_FOR_INPUT
+      priority: Normal
+      subject: "[Release] ${release.title}: ${task.title}"
+      body: |-
+        The **${task.title}** task in the **${release.title}** release needs your input.
+
+        Please enter the required information so the release can continue.
+      roles:
+      - Watcher
+      - Task Team
+      - Task Owner
+    - notification: AUDIT_REPORT_JOB_COMPLETED
+      priority: Normal
+      subject: "[Release] Report '${report.reportName}' is ready"
+      body: |-
+        **Your audit report is complete!**
+
+         '${report.reportName}' is ready for download.
+    - notification: GENERIC_SYSTEM_NOTIFICATION
+      priority: Normal
+      subject: "${notification.subject}"
+      body: "${notification.body}"
+    - notification: RELEASE_STARTED
+      priority: Normal
+      subject: "[Release] ${release.title}"
+      body: "The **${release.title}** release has been started."
+      bulkSubject: "[Release] Multiple releases started"
+      bulkBody: |-
+        The following releases have been started:
+
+        ${#releases}
+        * [${title}](${url})
+        ${/releases}
+      roles:
+      - Release Admin
+    - notification: RELEASE_ABORTED
+      priority: Normal
+      subject: "[Release] ${release.title}"
+      body: "The **${release.title}** release has been aborted."
+      bulkSubject: "[Release] Multiple releases aborted"
+      bulkBody: |-
+        The following releases have been aborted:
+
+        ${#releases}
+        * [${title}](${url})
+        ${/releases}
+      roles:
+      - Release Admin
+    - notification: ACTIVE_TASK_ASSIGNED
+      priority: Normal
+      subject: "[Release] ${release.title}: ${task.title}"
+      body: "The active task **${task.title}** in the **${release.title}** release\
+        \ is now assigned to ${task.ownerFullName}."
+      roles:
+      - Watcher
+      - Task Team
+      - Task Owner
+- name: Example Github Repo for external script task
+  type: xlrelease.GitHubScmConnectorConfig
+  repository: vijay-pandurangan/repo-for-external-script-task
+  credential:
+    type: xlrelease.GitHubUsernamePasswordCredential
+    username: xl-dev-test
+    password: !value "xlrelease_GitHubUsernamePasswordCredential_password"
+- template: script tasks validation
+  scheduledStartDate: 2021-11-16T03:30:00Z
+  dueDate: 2021-11-16T04:30:00Z
+  phases:
+  - phase: Jython script task phase
+    tasks:
+    - name: create multiple templates
+      type: xlrelease.ScriptTask
+      precondition: "releaseVariables['number_of_templates'] >  0"
+      failureHandler: |-
+        if (releaseVariables['number_of_templates'] < 3):
+
+            releaseVariables['number_of_templates'] = releaseVariables['number_of_templates'] + 2
+
+            taskApi.retryTask(getCurrentTask().getId(), "Retrying task from failure handler.")
+            print(releaseVariables['number_of_templates'])
+
+        else:
+
+            release = getCurrentRelease()
+            rid = release.id
+            releaseApi.abort(rid, "aborting release from failure handeler as task failed")
+      taskFailureHandlerEnabled: true
+      taskRecoverOp: RUN_SCRIPT
+      script: |-
+        from com.xebialabs.xlrelease.domain import Release
+        from com.xebialabs.xlrelease.api.v1.forms import StartRelease
+        from com.xebialabs.xlrelease.domain.status import ReleaseStatus
+        import datetime
+        from random import choice
+        from string import ascii_lowercase
+
+
+        lis=list(ascii_lowercase)
+        random_string =  ''.join(choice(lis) for _ in range(4))
+
+        for i in range(${number_of_templates}):
+            folder = folderApi.find("script_task/subfolder-to-store-templates", 1)
+            template = Release()
+            currentDT = datetime.datetime.now()
+            templateTitle = random_string + str(i) + "_Template"
+            template.setTitle(templateTitle)
+            template.setStatus(ReleaseStatus.TEMPLATE)
+            template.setScheduledStartDate(currentDT)
+            releaseTemplate = templateApi.createTemplate(template, folder.id)
+            print("Created Template : " + templateTitle )
+    - name: create multiple applications using jython script
+      type: xlrelease.ScriptTask
+      description: Jython script task to create  "n" number of applications based
+        on the input from folder variable "NumberOfApplications"
+      failureHandler: |-
+        release = getCurrentRelease()
+        rid = release.id
+        releaseApi.abort(rid, "aborting release from failure handeler as task failed")
+      taskFailureHandlerEnabled: true
+      taskRecoverOp: RUN_SCRIPT
+      script: |-
+        from random import choice
+        from string import ascii_lowercase
+        from com.xebialabs.xlrelease.api.v1.form import ApplicationForm
+
+        lis=list(ascii_lowercase)
+        random_string =  ''.join(choice(lis) for _ in range(4))
+
+        for i in range(${number_of_applications}):
+            applicationForm = ApplicationForm()
+            app_Title = random_string + str(i) + "_Application"
+            applicationForm.setTitle(app_Title);
+            applicationApi.create(applicationForm.toApplication())
+            print("Created application : " + app_Title)
+    - name: add a comment
+      type: xlrelease.ScriptTask
+      failureHandler: |-
+        release = getCurrentRelease()
+        rid = release.id
+        releaseApi.abort(rid, "aborting release from failure handeler as task failed")
+      taskFailureHandlerEnabled: true
+      taskRecoverOp: RUN_SCRIPT
+      script: |-
+        task = getCurrentTask()
+        comment = Comment()
+        comment.setComment(${comment_text})
+        taskApi.commentTask(task.id, comment)
+    - name: modify value of release variable
+      type: xlrelease.ScriptTask
+      failureHandler: |-
+        release = getCurrentRelease()
+        rid = release.id
+        releaseApi.abort(rid, "aborting release from failure handeler as task failed")
+      taskFailureHandlerEnabled: true
+      taskRecoverOp: RUN_SCRIPT
+      script: |-
+        orignal_releaseVariables_value = releaseVariables['modifiable_variable']
+        print("Original Release Variable Value : " + orignal_releaseVariables_value)
+        modified = releaseVariables['modifiable_variable'] = 'Modified Value'
+        print("Modified : " + modified)
+    color: '#3D6C9E'
+  - phase: Groovy script task phase
+    tasks:
+    - name: current dateTime using groovy script
+      type: xlrelease.GroovyScriptTask
+      failureHandler: |-
+        release = getCurrentRelease()
+        rid = release.id
+        releaseApi.abort(rid, "aborting release from failure handeler as task failed")
+      taskFailureHandlerEnabled: true
+      taskRecoverOp: RUN_SCRIPT
+      ignoreScriptVariableInterpolation: true
+      script: |-
+        import java.time.LocalDateTime
+        def dt = LocalDateTime.now()
+        println dt
+    - name: array example
+      type: xlrelease.GroovyScriptTask
+      failureHandler: |-
+        release = getCurrentRelease()
+        rid = release.id
+        releaseApi.abort(rid, "aborting release from failure handeler as task failed")
+      taskFailureHandlerEnabled: true
+      taskRecoverOp: RUN_SCRIPT
+      ignoreScriptVariableInterpolation: true
+      script: |-
+        def y = ["Java", "is", "Best", "for", "Python", "dart"]
+        println y
+        y.add("Learning")
+        println(y.contains("is"))
+        println(y.get(2))
+        println(y.pop())
+    color: '#3D6C9E'
+  - phase: External Script task Phase
+    tasks:
+    - name: external script task
+      type: xlrelease.ExternalScriptTask
+      failureHandler: |-
+        release = getCurrentRelease()
+        rid = release.id
+        releaseApi.abort(rid, "aborting release from failure handeler as task failed")
+      taskFailureHandlerEnabled: true
+      taskRecoverOp: RUN_SCRIPT
+      url: https://raw.githubusercontent.com/vijay-pandurangan/repo-for-external-script-task/master/test.py
+    color: '#3D6C9E'
+  variables:
+  - type: xlrelease.IntegerVariable
+    key: number_of_templates
+    label: This variable will define the number of templates to be created from the
+      jython script
+    description: This variable will define the number of templates to be created from
+      the jython script
+    value: 20
+  - type: xlrelease.IntegerVariable
+    key: number_of_applications
+    label: This variable will define the number of applications to be created from
+      the jython script
+    description: This variable will define the number of applications to be created
+      from the jython script
+    value: 20
+  - type: xlrelease.StringVariable
+    key: comment_text
+    label: This variable will provide the input for the comment to be added through
+      through jython script task
+    description: This variable will provide the input for the comment to be added
+      through through jython script task
+    value: '"new Comment through jython api"'
+  - type: xlrelease.StringVariable
+    key: modifiable_variable
+    label: This variable is used to modify its value through jython script
+    description: This variable is used to modify its value through jython script
+    value: actual value
+  - type: xlrelease.IntegerVariable
+    key: number
+    value: 10
+  scriptUsername: admin
+  scriptUserPassword: !value "xlrelease_Release_script_tasks_validation_scriptUserPassword"
+  riskProfile: Default risk profile
