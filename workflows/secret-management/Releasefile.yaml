@@ -1,5 +1,5 @@
 ---
-apiVersion: x1/v3
+apiVersion: x1/v1
 kind: Import
 spec:
   imports:
