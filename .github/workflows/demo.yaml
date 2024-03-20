@@ -28,6 +28,6 @@ jobs:
           for file in ${ALL_CHANGED_FILES}; do
             echo "$file was changed"
             if [[ "$file" == *.yaml || "$file" == *.yml ]]; then
-              echo "$file is yaml file"
+               echo "$file is yaml file"
           done
         
