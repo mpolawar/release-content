@@ -2,7 +2,7 @@
 <img src="https://github.com/digital-ai/release-content/assets/7783488/0d0bc77f-5231-4b7d-8dce-65f18e534e2f" alt="Digital.ai Release" width="400px" height="72px">
 
 
-# Digital.ai Release Content Repository
+# Digital.ai  XL-Release Content Repository
 
 Welcome to the official Digital.ai Release content repository! This repository is dedicated to storing officially published release templates and workflow templates by Digital.ai.
 
