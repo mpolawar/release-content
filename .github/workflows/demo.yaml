@@ -29,5 +29,6 @@ jobs:
             echo "$file was changed"
             if [[ "$file" == *.yaml || "$file" == *.yml ]]; then
                echo "$file is yaml file"
+            fi
           done
         
