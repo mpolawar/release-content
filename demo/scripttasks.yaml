@@ -6,7 +6,7 @@ metadata:
 spec:
 - directory: subfolder-to-store-templates
   children:
-  - template: adra0_Template
+  - template123: adra0_Template
     scheduledStartDate: 2023-04-28T17:35:40.636Z
     phases:
     - phase: New Phase
