@@ -9,7 +9,7 @@ spec:
   - template: adra0_Template
     scheduledStartDate: 2023-04-28T17:35:40.636Z
     phases:
-    - phase: New Phase
+    - phase: New Phase123
     riskProfile: Default risk profile
   - template: adra10_Template
     scheduledStartDate: 2023-04-28T17:35:41.105Z
