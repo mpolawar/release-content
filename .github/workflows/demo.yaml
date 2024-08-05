@@ -12,18 +12,17 @@ jobs:
 
   run_xl_apply:
     runs-on: ubuntu-latest
-    environment: DAI_RELEASE_VERSIONS
     
     steps:
       - name: Checkout release-content Repository
         uses: actions/checkout@v3
 
       - name: Pull Release Docker image
-        run: docker pull xebialabsunsupported/xl-release:${{ env.DAI_RELEASE_24_3 }}
+        run: docker pull xebialabsunsupported/xl-release:${{ vars.DAI_RELEASE_24_3 }}
 
       - name: Run Docker container
         run:  | 
-          docker run -p 5516:5516 -d --name xlr${{ env.DAI_RELEASE_24_3 }} -e "ACCEPT_EULA=Y"  xebialabsunsupported/xl-release:${{ env.DAI_RELEASE_24_3 }}
+          docker run -p 5516:5516 -d --name xlr${{ vars.DAI_RELEASE_24_3 }} -e "ACCEPT_EULA=Y"  xebialabsunsupported/xl-release:${{ vars.DAI_RELEASE_24_3 }}
           sleep 100
               
       - name: Download and Install xl-cli
