@@ -1,0 +1,19 @@
+name: Get Target Branch Name
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  get_target_branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Get Target Branch Name
+        run: echo "TARGET_BRANCH=${{ github.event.pull_request.base.ref }}" >> $GITHUB_ENV
+
+      - name: Print Target Branch Name
+        run: echo "Target branch is $TARGET_BRANCH"
