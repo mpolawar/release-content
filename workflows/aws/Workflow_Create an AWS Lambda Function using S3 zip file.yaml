@@ -9,7 +9,7 @@ spec:
     S3 zip file
   scheduledStartDate: 2023-09-20T03:30:00Z
   phases:
-  - phase: New Phase1234567
+  - phase: New Phase12345678
     tasks:
     - name: AWS Server Connection
       type: xlrelease.UserInputTask
