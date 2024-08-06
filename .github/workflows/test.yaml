@@ -17,3 +17,6 @@ jobs:
 
       - name: Print Target Branch Name
         run: echo "Target branch is $TARGET_BRANCH"
+
+      - name: Print xl-cli and docker version from env 
+        run: echo "xl-cli and docker version is  ${{ env.VERSION }}
