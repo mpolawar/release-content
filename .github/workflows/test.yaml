@@ -24,11 +24,10 @@ jobs:
       - name: Get version name from version.json
         id: load_vars
         run: |
-          REF_NAME="${{ github.ref_name }}"
           VAR_FILE="./github/config/version.json"
           if [ -f "$VAR_FILE" ]; then
-            VARS=$(jq -r --arg ref "$TARGET_BRANCH" '.[$ref] // .default' "$VAR_FILE")
-            echo "$VARS" | jq -r 'to_entries | .[] | "echo \(.key)=\(.value) >> $GITHUB_ENV"' | sh
+            product_version = $(jq -r --arg TARGET_BRANCH "$TARGET_BRANCH" '.[$TARGET_BRANCH]' VAR_FILE)
+            echo $product_version
 
       - name: Print version got from json
-        run: echo "xl-cli and docker version from josn file is $VAR"
+        run: echo "xl-cli and docker version from josn file is $product_version"
