@@ -1,0 +1,67 @@
+# This workflow will execute xl cli apply on newly created or updated yaml files. 
+
+name: Verify Digital.ai Official workflow and templates
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  run_xl_apply:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout release-content Repository
+        uses: actions/checkout@v3
+
+      - name: Get Target Branch Name
+        run: echo "TARGET_BRANCH=${{ github.event.pull_request.base.ref }}" >> $GITHUB_ENV
+
+      - name: Print Target Branch Name
+        run: echo "Target branch is $TARGET_BRANCH"
+
+      - name: Get version name from version.json
+        run: |
+          VAR_FILE=".github/config/versions.json"
+          if [ -f "$VAR_FILE" ]; then
+              echo "json file is $VAR_FILE"
+              echo "target branch is $TARGET_BRANCH"
+              product_version=$(jq -r --arg branch "$TARGET_BRANCH" '.[$branch]' "$VAR_FILE")
+              echo "Product version: $product_version"
+              echo "product_version=$product_version" >> $GITHUB_ENV
+          else
+            echo "File $VAR_FILE does not exist"
+          fi
+          echo "Debug: product_version=$product_version"
+
+      - name: Print version got from json
+        run: echo "xl-cli and docker version from versions.json file is $product_version"
+
+      - name: Pull Release Docker image
+        run: docker pull xebialabsunsupported/xl-release:$product_version
+
+      - name: Run Docker container
+        run:  | 
+          docker run -p 5516:5516 -d --name xlr$product_version -e "ACCEPT_EULA=Y" xebialabsunsupported/xl-release:$product_version
+          sleep 100
+
+      - name: Download and Install xl-cli
+        run: |
+         wget https://dist.xebialabs.com/public/xl-cli/$product_version/linux-amd64//xl -O xl1
+         chmod 755 xl1
+         ./xl1 version
+      
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v43
+        
+      - name: Apply yaml files to check if xl-apply works
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          for file in ${ALL_CHANGED_FILES}; do
+            echo "$file was changed"
+            if [[ "$file" == *.yaml || "$file" == *.yml ]]; then
+               echo "$file is yaml file"
+               ./xl1 apply -f $file
+            fi
+          done
