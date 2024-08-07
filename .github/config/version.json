@@ -1,0 +1,14 @@
+{
+  "main": {
+    "VERSION": "main_value"
+  },
+  "release/24.3.x": {
+    "VERSION": "24.1.4"
+  },
+  "release/24.1.x": {
+    "VERSION": "24.1.4"
+  },
+  "release/23.3.x": {
+    "VERSION": "23.3.9"
+  }
+}
