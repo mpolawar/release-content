@@ -20,7 +20,7 @@ jobs:
 
       - name: Get version name from version.json
         run: |
-          VAR_FILE=".github/config/version.json"
+          VAR_FILE=".github/config/versions.json"
           if [ -f "$VAR_FILE" ]; then
               echo "json file is $VAR_FILE"
               echo "target branch is $TARGET_BRANCH"
