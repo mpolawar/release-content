@@ -26,8 +26,8 @@ jobs:
           VAR_FILE="./github/config/version.json"
           if [ -f "$VAR_FILE" ]; then
             product_version=$(jq -r --arg branch "$TARGET_BRANCH" '.[$branch]' "$VAR_FILE")
-          else
-            echo "Version.json file is missing"
-  
+            echo "Product version: $product_version"
+          fi
+
       - name: Print version got from json
         run: echo "xl-cli and docker version from josn file is $product_version"
