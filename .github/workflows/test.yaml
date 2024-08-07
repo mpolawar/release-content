@@ -29,8 +29,6 @@ jobs:
           if [ -f "$VAR_FILE" ]; then
             VARS=$(jq -r --arg ref "$TARGET_BRANCH" '.[$ref] // .default' "$VAR_FILE")
             echo "$VARS" | jq -r 'to_entries | .[] | "echo \(.key)=\(.value) >> $GITHUB_ENV"' | sh
-          else
-            echo "VAR=default_value" >> $GITHUB_ENV
 
       - name: Print version got from json
         run: echo "xl-cli and docker version from josn file is $VAR"
