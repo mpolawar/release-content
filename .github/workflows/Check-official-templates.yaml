@@ -75,6 +75,7 @@ jobs:
         run: |
           IFS=$'\n'
           for file in ${ALL_CHANGED_FILES}; do
+            file=$(echo "$file" | sed 's/^"//;s/"$//')
             echo "$file was changed"
             ./xl1 apply -f "$file"
           done
