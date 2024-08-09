@@ -49,20 +49,32 @@ jobs:
          wget https://dist.xebialabs.com/public/xl-cli/$product_version/linux-amd64//xl -O xl1
          chmod 755 xl1
          ./xl1 version
-      
-      - name: Get changed files
+
+      - name: Get changed YAML files
         id: changed-files
-        uses: tj-actions/changed-files@v43
-        
-      - name: Apply yaml files to check if xl-apply works
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const changedFiles = await github.paginate(
+              github.rest.pulls.listFiles,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number,
+              }
+            );
+            const yamlFiles = changedFiles
+              .filter(file => file.filename.endsWith('.yaml') || file.filename.endsWith('.yml'))
+              .map(file => file.filename)
+              .join('\n');
+            return yamlFiles;
+
+      - name: Apply YAML files to check if xl-apply works
         env:
-          ALL_CHANGED_FILES: "${{ steps.changed-files.outputs.all_changed_files }}"
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.result }}
         run: |
           IFS=$'\n'
           for file in ${ALL_CHANGED_FILES}; do
             echo "$file was changed"
-            if [[ "$file" == *.yaml || "$file" == *.yml ]]; then
-               echo "$file is yaml file"
-               ./xl1 apply -f "$file"
-            fi
+            ./xl1 apply -f "$file"
           done
