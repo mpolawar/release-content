@@ -41,7 +41,7 @@ jobs:
 
       - name: Run Docker container
         run:  | 
-          docker run -p 5516:5516 -d --name xlr$product_version -e "ACCEPT_EULA=Y" xebialabsunsupported/xl-release:$product_version
+          docker run -p 5516:5516 -d --name xlr$product_version -e "ACCEPT_EULA=Y" -e "ADMIN_PASSWORD=admin" xebialabsunsupported/xl-release:$product_version
           sleep 100
 
       - name: Download and Install xl-cli
