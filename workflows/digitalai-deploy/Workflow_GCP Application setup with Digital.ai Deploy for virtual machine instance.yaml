@@ -10,8 +10,8 @@ spec:
     \ infrastructure configuration."
   scheduledStartDate: 2023-03-31T03:30:00Z
   dueDate: 2023-03-31T04:30:00Z
-  phases_wrong:
-  - phase: Setup Env and Infra123
+  phases:
+  - phase: Setup Env and Infra123456
     tasks:
     - name: Specify Run As User
       type: xlrelease.UserInputTask
