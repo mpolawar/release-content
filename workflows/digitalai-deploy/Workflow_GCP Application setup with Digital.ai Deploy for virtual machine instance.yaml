@@ -11,7 +11,7 @@ spec:
   scheduledStartDate: 2023-03-31T03:30:00Z
   dueDate: 2023-03-31T04:30:00Z
   phases:
-  - phase: Setup Env and Infra
+  - phase: Setup Env and Infra123
     tasks:
     - name: Specify Run As User
       type: xlrelease.UserInputTask
