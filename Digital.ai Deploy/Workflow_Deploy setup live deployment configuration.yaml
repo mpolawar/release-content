@@ -1,0 +1,166 @@
+---
+apiVersion: xl-release/v1
+kind: Templates
+metadata:
+  home: Digital.ai - Official/Workflows/Digital.ai Deploy
+spec:
+- template: Deploy setup live deployment configuration
+  description: "Create or update Deploy live deployment configuration"
+  phases:
+  - phase: Input
+    tasks:
+    - name: Check if remote runner exists
+      type: xlrelease.ScriptTask
+      description: Checks if an enabled remote runner is present in the system.
+      script: |-
+        def check_runners(runners):
+          for runner in runners:
+            if runner["enabled"] and "remote" in runner["capabilities"]:
+              return True
+          return False
+
+        runners = configurationApi.searchByTypeAndTitle("xlrelease.JobRunner", "")
+
+        if not check_runners(runners):
+          raise Exception("There is no job runner with 'remote' capability enabled")
+    - name: Fetch details
+      type: xlrelease.ScriptTask
+      description: Fetches details about target server.
+      script: |-
+        statusWebhookEventSource = configurationApi.getConfiguration("${statusWebhookEventSourceId}")
+        sourceServer = statusWebhookEventSource["sourceServer"]
+
+        releaseVariables['targetServerTitle'] = sourceServer.title
+        releaseVariables['targetServerUrl'] = sourceServer.url
+        releaseVariables['statusWebhookEventSourceFolderId'] = statusWebhookEventSource.folderId
+
+        if "${liveDeploymentConfigurationId}":
+          liveDeploymentConfiguration = configurationApi.getConfiguration("${liveDeploymentConfigurationId}")
+          releaseVariables['liveDeploymentConfigurationName'] = liveDeploymentConfiguration.title
+          releaseVariables['liveDeploymentConfigurationApplication'] = liveDeploymentConfiguration.application
+          releaseVariables['liveDeploymentConfigurationEnvironment'] = liveDeploymentConfiguration.environment
+    - name: Live deployment configuration name
+      type: xlrelease.UserInputTask
+      description: |-
+        Add a name for your live deployment configuration.
+
+        **Target: ${targetServerTitle}**
+        ${targetServerUrl}
+      variables:
+      - liveDeploymentConfigurationName
+    - name: Live deployment configuration filter
+      type: xlrelease.UserInputTask
+      description: Input the Deploy application and environment filter to select applications from
+        the deployment provider for live deployments.
+      variables:
+      - liveDeploymentConfigurationApplication
+      - liveDeploymentConfigurationEnvironment
+    color: '#3d6c9e'
+  - phase: Autoconfiguration
+    tasks:
+    - name: Create or update live deployment configuration
+      type: xlrelease.ScriptTask
+      description: Creates a LiveDeploymentConfiguration with provided inputs and
+        adds it to the list of configs on selected StatusWebhookEventSource.
+      script: |-
+        from com.xebialabs.xlrelease.domain import Configuration
+        from com.xebialabs.deployit.plugin.api.reflect import Type
+
+        if "${liveDeploymentConfigurationId}":
+          liveDeploymentConfiguration = configurationApi.getConfiguration("${liveDeploymentConfigurationId}")
+          liveDeploymentConfiguration.title = "${liveDeploymentConfigurationName}"
+          liveDeploymentConfiguration.application = "${liveDeploymentConfigurationApplication}"
+          liveDeploymentConfiguration.environment = "${liveDeploymentConfigurationEnvironment}"
+
+          configurationApi.updateConfiguration("${liveDeploymentConfigurationId}", liveDeploymentConfiguration)
+        else:
+          statusWebhookEventSource = configurationApi.getConfiguration("${statusWebhookEventSourceId}")
+
+          liveDeploymentConfiguration = Configuration()
+          liveDeploymentConfiguration.type = Type.valueOf("deploy.DeploymentConfig")
+          liveDeploymentConfiguration.title = "${liveDeploymentConfigurationName}"
+          liveDeploymentConfiguration.folderId = "${statusWebhookEventSourceFolderId}"
+          liveDeploymentConfiguration.setProperty("application", "${liveDeploymentConfigurationApplication}")
+          liveDeploymentConfiguration.setProperty("environment", "${liveDeploymentConfigurationEnvironment}")
+
+          liveDeploymentConfiguration = configurationApi.addConfiguration(liveDeploymentConfiguration)
+
+          liveDeploymentConfigs = statusWebhookEventSource.getProperty("liveDeploymentConfigs")
+          liveDeploymentConfigs.add(liveDeploymentConfiguration)
+
+          statusWebhookEventSource.setProperty("liveDeploymentConfigs", liveDeploymentConfigs)
+
+          configurationApi.updateConfiguration("${statusWebhookEventSourceId}", statusWebhookEventSource)
+    - name: Configure Deploy CIs
+      type: xlrelease.ScriptTask
+      description: Creates webhook configuration CIs on Deploy Server.
+      script: |-
+        autoconfigResponse = deploymentProviderApi.autoconfigureDeploymentProvider("${statusWebhookEventSourceId}")
+        releaseVariables['autoconfigMessage'] = autoconfigResponse.message
+        releaseVariables['autoconfigUrl'] = autoconfigResponse.url
+    - name: Check configured CIs
+      type: xlrelease.Task
+      description: |-
+        Successfully configured Live Deployment Configuration.
+
+        ${autoconfigMessage}
+
+        [View in Deploy](${autoconfigUrl})
+    color: '#3d6c9e'
+  kind: WORKFLOW
+  categories:
+    - Application onboarding
+  tags:
+    - Remote Deploy
+    - deployment provider
+    - config
+  variables:
+  - type: xlrelease.StringVariable
+    key: statusWebhookEventSourceId
+  - type: xlrelease.StringVariable
+    key: liveDeploymentConfigurationId
+    requiresValue: false
+  - type: xlrelease.StringVariable
+    key: liveDeploymentConfigurationName
+    showOnReleaseStart: false
+    label: Name
+    description: The name of live deployment configuration
+  - type: xlrelease.StringVariable
+    key: liveDeploymentConfigurationApplication
+    showOnReleaseStart: false
+    label: Application
+    description: Application/directory path/regex in Digital.ai Deploy
+    value: .*
+  - type: xlrelease.StringVariable
+    key: liveDeploymentConfigurationEnvironment
+    showOnReleaseStart: false
+    label: Environment
+    description: Environment/directory path/regex in Digital.ai Deploy
+    value: .*
+  - type: xlrelease.StringVariable
+    key: targetServerTitle
+    requiresValue: false
+    showOnReleaseStart: false
+  - type: xlrelease.StringVariable
+    key: targetServerUrl
+    requiresValue: false
+    showOnReleaseStart: false
+  - type: xlrelease.StringVariable
+    key: statusWebhookEventSourceFolderId
+    requiresValue: false
+    showOnReleaseStart: false
+  - type: xlrelease.StringVariable
+    key: autoconfigMessage
+    requiresValue: false
+    showOnReleaseStart: false
+  - type: xlrelease.StringVariable
+    key: autoconfigUrl
+    requiresValue: false
+    showOnReleaseStart: false
+  disableNotifications: true
+  author: Digital.ai
+  logo:
+    type: xlrelease.TemplateLogo
+    contentType: image/svg+xml
+    file: !file "template-logo/97662a62108c2b1e1875c8e18f6d1c72a013d33c/deploy.svg"
+  defaultTargetFolder: Digital.ai - Official/Workflow Executions
