@@ -8,7 +8,7 @@ spec:
   scheduledStartDate: 2023-04-27T18:30:00+05:30
   dueDate: 2023-04-27T19:30:00+05:30
   phases:
-  - phase: Delete Application in ArgoCD123
+  - phase: Delete Application in ArgoCD
     tasks:
     - name: Specify RunAs user
       type: xlrelease.UserInputTask
